@@ -23,6 +23,7 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            position: relative;
         }
 
         .landing {
@@ -63,11 +64,10 @@
             margin-top: 50px;
         }
 
-        .envelope {
-            position: relative;
+        .card {
             width: 250px;
             height: 150px;
-            background: #f1c40f;
+            background: #ffeb3b;
             border-radius: 10px;
             cursor: pointer;
             transition: transform 0.3s;
@@ -75,23 +75,12 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+            position: relative;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .envelope::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            background: #d4ac0d;
-            border-radius: 10px 10px 0 0;
-            transform-origin: top;
-            transition: transform 0.5s;
-        }
-
-        .envelope:hover::before {
-            transform: rotateX(180deg);
+        .card:hover {
+            transform: scale(1.1);
         }
 
         .wish {
@@ -104,10 +93,21 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
+            text-align: center;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
+    <div class="particles"></div>
     <div class="landing">
         <h1>Welcome to Ojaswani's Birthday Celebration! 🎉</h1>
         <button class="start-btn" onclick="startCelebration()">Let's Go!</button>
@@ -116,16 +116,16 @@
     <div class="main-content">
         <h1>Happy Birthday Ojaswani! 🎂🎉</h1>
         <div class="wishes-container">
-            <div class="envelope" onclick="openEnvelope(this)">
+            <div class="card" onclick="openCard(this)">
                 <div class="wish">Happy Birthday! Wishing you endless happiness! 🎂</div>
             </div>
-            <div class="envelope" onclick="openEnvelope(this)">
+            <div class="card" onclick="openCard(this)">
                 <div class="wish">May this year bring success and joy in abundance! 🌟</div>
             </div>
-            <div class="envelope" onclick="openEnvelope(this)">
+            <div class="card" onclick="openCard(this)">
                 <div class="wish">Enjoy your special day to the fullest! 🎊</div>
             </div>
-            <div class="envelope" onclick="openEnvelope(this)">
+            <div class="card" onclick="openCard(this)">
                 <div class="wish">You are truly amazing, never forget that! ❤️</div>
             </div>
         </div>
@@ -142,10 +142,28 @@
             document.querySelector('.landing').style.display = 'none';
             document.querySelector('.main-content').style.display = 'block';
             audio.play();
+            createParticles();
         }
 
-        function openEnvelope(element) {
+        function openCard(element) {
             element.querySelector('.wish').style.display = 'block';
+        }
+
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            for (let i = 0; i < 50; i++) {
+                let particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '10px';
+                particle.style.height = '10px';
+                particle.style.background = 'white';
+                particle.style.borderRadius = '50%';
+                particle.style.opacity = Math.random();
+                particle.style.top = Math.random() * window.innerHeight + 'px';
+                particle.style.left = Math.random() * window.innerWidth + 'px';
+                particle.style.animation = `float ${Math.random() * 5 + 3}s infinite ease-in-out`;
+                particlesContainer.appendChild(particle);
+            }
         }
     </script>
 </body>
